@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  nodejs:
+    container_name: nodejs
+    image: node:10.15.3-alpine 
+    build:
+      context: nodejs
+    ports:
+      - "4000"
+    networks:
+      - retotec
+    volumes:
+      - "./nodejs:/home/node" 
+  nginxrevproxy:
+    container_name: nginxrevproxy
+    image: nginx:stable-alpine
+    build:
+      context: nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "./nginx"
+    networks:
+      - retotec
+
+
+networks:
+  retotec:
